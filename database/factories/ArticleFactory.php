@@ -18,10 +18,12 @@ class ArticleFactory extends Factory
     {
         return [
             "title" => $this->faker->sentence(mt_rand(2, 10)),
+            // "category_id" => $this->faker->unique()->numberBetween(1, Category::count()),
+            // "user_id" => $this->faker->unique()->numberBetween(1, User::count()),
             "category_id" => 1,
             "user_id" => 1,
             "content" => $this->faker->paragraph(mt_rand(3, 10)),
-            // 'image' => $this->image('public/storage/images', 640, 480, null, false),
+            'image' => $this->faker->imageUrl(200, 200, "animals", true),
         ];
     }
 }
