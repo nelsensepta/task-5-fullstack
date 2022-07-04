@@ -17,7 +17,11 @@ class ArticleFactory extends Factory
     public function definition()
     {
         return [
-            //
+            "title" => $this->faker->sentence(mt_rand(2, 10)),
+            "category_id" => 1,
+            "user_id" => 1,
+            "content" => $this->faker->paragraph(mt_rand(3, 10)),
+            // 'image' => $this->image('public/storage/images', 640, 480, null, false),
         ];
     }
 }
