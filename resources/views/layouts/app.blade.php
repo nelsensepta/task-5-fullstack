@@ -31,7 +31,7 @@
                 <a class="navbar-brand" href="{{ url('/home/articles') }}">
                    Article
                 </a>
-                <a class="navbar-brand" href="{{ url('/categories') }}">
+                <a class="navbar-brand" href="{{ url('/home/categories') }}">
                    Category
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -13,7 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return view('home.category.index', [
+            'categories' => Category::all(),
+        ]);
     }
 
     /**
@@ -23,7 +27,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view("home.category.create", [
+            "articles" => Article::all(),
+        ]);
     }
 
     /**
@@ -54,9 +60,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        return view("home.category.edit", [
+            'articles' => Article::all(),
+            "category" => $category,
+        ]);
     }
 
     /**
