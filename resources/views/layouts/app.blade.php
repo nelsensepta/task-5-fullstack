@@ -19,6 +19,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="{{asset("js/tinymce//tinymce.min.js")}}"></script>
+       
+    {{-- @section("script") --}}
 </head>
 
 <body>
@@ -90,6 +93,9 @@
             @yield('content')
         </main>
     </div>
+
+
+    {{-- <script src="{{ asset('js/tinymce/tinymce.js') }}"></script> --}}
 </body>
 
 </html>

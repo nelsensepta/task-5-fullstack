@@ -56,6 +56,7 @@ class ArticleController extends Controller
         $category = Article::create([
             'title' => $request->title,
             "content" => $request->content,
+            "category_id" => $request->category_id,
             "user_id" => auth()->user()->id,
         ]);
         //return response
@@ -77,6 +78,7 @@ class ArticleController extends Controller
             ];
             return response()->json($response);
         }
+        // Model::whereNotNull('sent_at')->get();
         return new ResponseResource(true, 'Data Article Ditemukan!', $article);
     }
 
@@ -106,6 +108,7 @@ class ArticleController extends Controller
             ];
             return response()->json($response);
         }
+
         //define validation rules
         $validator = Validator::make($request->all(), [
             'title' => 'required',

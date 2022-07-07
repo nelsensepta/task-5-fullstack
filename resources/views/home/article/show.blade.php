@@ -27,7 +27,7 @@
                             @if($article->image)
                             <div style="max-height: 350px, overflow:hidden">
                               {{-- <img src="{{asset('storage/' . $post->image)}}" class="img-fluid" alt="{{$post->category->name}}"/> --}}
-                              <img src={{$article->image}} class="img-fluid" alt="{{$article->category->name}}"/>
+                              {{-- <img src={{$article->image}} class="img-fluid" alt="{{$article->category->name}}"/> --}}
                             </div>
                             @else
                                <img src="https://source.unsplash.com/1200x500/?{{$article->category->name}}" class="img-fluid" alt="{{$article->category->name}}"/>

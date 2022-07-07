@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -25,16 +26,7 @@
                         @enderror
                         {{-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
                       </div>
-                      <div class="mb-3">
-                        <label for="slug" class="form-label">Slug</label>
-                        <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug"  name="slug"  required value="{{old('slug')}}">
-                        {{-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
-                        @error('slug')
-                        <div class="invalid-feedback">
-                          {{$message}}
-                        </div>
-                      @enderror
-                      </div>
+                   
                       <div class="mb-3">
                         <label for="category" class="form-label">Category</label>
                         <select class="form-select" name="category_id">
@@ -58,12 +50,13 @@
                         </div>
                       @enderror
                       <div class="mb-3">
-                         <label for="body" class="form-label">Body</label>
-                          @error('body')   
-                            <p class="text-danger">{{$message}}</p>
-                          @enderror
-                          <input id="body" type="hidden" name="body" value="{{old('body')}}">
-                          <trix-editor input="body"></trix-editor>
+                        <label for="body" class="form-label">Body</label>
+                        {{-- <x-forms.tinymce-editor/> --}}
+                        <textarea id="ok" type="text" name="content" required class="form-control">{{ old('content') }}</textarea>
+                        {{-- <trix-editor input="body"></trix-editor> --}}
+                        @error('content')   
+                          <p class="text-danger">{{$message}}</p>
+                        @enderror
                       </div>
                       <button type="submit" class="btn btn-primary">Create Article</button>
                     </form>
@@ -74,7 +67,17 @@
         </div>
     </div>
 </div>
-                  <script>
+{{-- <script src="{{ asset('js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script> --}}
+<script>
+          tinymce.init({
+            height: 600,
+            selector: 'textarea#ok', // Replace this CSS selector to match the placeholder element for TinyMCE
+            plugins: "advlist autolink lists link image editimage charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount emoticons",
+            toolbar:"undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
+          });
+
+          
+ 
                     const title = document.getElementById("title");
                     const slug = document.getElementById("slug");
                     title.addEventListener("change", () => {
@@ -100,5 +103,7 @@
                       imgPreview.src = OFREvent.target.result;
                     }
                     }
-                  </script>
+</script>
 @endsection
+
+
