@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body">
                   <div class="col-lg-12">
-                    <form method="POST" action="/home/category" class="mb-5" enctype="multipart/form-data">
+                    <form method="POST" action="/home/categories" class="mb-5">
                       @csrf
                       <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
@@ -25,7 +25,7 @@
                         {{-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
                       </div>
                      
-                      <div class="mb-3">
+                      {{-- <div class="mb-3">
                         <label for="article" class="form-label">Articles</label>
                         <select class="form-select" name="id">
                           @foreach ($articles as $article )
@@ -36,7 +36,7 @@
                             @endif
                           @endforeach
                         </select>
-                      </div>
+                      </div> --}}
                       
                     
                       <button type="submit" class="btn btn-primary">Create Category</button>

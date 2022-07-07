@@ -40,7 +40,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+        ]);
+        $validatedData['user_id'] = auth()->user()->id;
+        Category::create($validatedData);
+        return redirect('home/categories')->with('success', 'New Category has been added!');
     }
 
     /**
@@ -75,9 +81,15 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $rules = [
+            'name' => 'required|max:100',
+        ];
+        $validatedData = $request->validate($rules);
+        $validatedData['user_id'] = auth()->user()->id;
+        Category::where('id', $category->id)->update($validatedData);
+        return redirect('home/categories')->with('success', 'Category has been updated!');
     }
 
     /**
@@ -86,8 +98,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        Category::destroy($category->id);
+        return redirect('home/categories')->with('success', 'Category has been deleted');
     }
 }

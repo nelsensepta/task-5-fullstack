@@ -18,7 +18,7 @@
                    
                   
                   @if (session()->has('success'))
-                    <div class="alert alert-success  col-lg-8">{{session('success')}}</div>
+                    <div class="alert alert-success  col-lg-12">{{session('success')}}</div>
                   @endif
                   <div class="table-responsive">
                     <a href="/home/articles/create" class="btn btn-primary mb-3">Create New Post</a>
@@ -36,12 +36,16 @@
                         <tr>
                           <td>{{ $loop->iteration }}</td>
                           <td>{{ $article->title }}</td>
+                         @if ($article->category)
                           <td>{{ $article->category->name }}</td>
+                         @else
+                          <td>Belum ada kategori</td>
+                         @endif
                           <td>
                             <a href="/home/articles/{{$article->id}}"  class="badge bg-info mb-1" ><i class="bi bi-eye-fill"></i></a>
                             <a href="/home/articles/{{$article->id}}/edit"  class="badge bg-warning mb-1" ><i class="bi bi-pencil"></i></a>
                   
-                            <form action="/dashboard/articles/{{$article->id}}" method="POST" class="d-inline">
+                            <form action="/home/articles/{{$article->id}}" method="POST" class="d-inline">
                               @method('delete')
                               @csrf
                               <button class="badge bg-danger border-0" onclick="return confirm('Are You Sure ?')">

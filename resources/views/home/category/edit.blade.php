@@ -24,18 +24,7 @@
                           </div>
                         @enderror
                       </div>
-                      <div class="mb-3">
-                        <label for="article" class="form-label">Articles</label>
-                        <select class="form-select" name="id">
-                          @foreach ($articles as $article )
-                            @if (old('id') == $article->id)    
-                              <option value="{{ $article->id }}" selected>{{ $article->title }}</option>
-                            @else
-                              <option value="{{ $article->id }}">{{ $article->title }}</option>
-                            @endif
-                          @endforeach
-                        </select>
-                      </div>
+                      
                       <button type="submit" class="btn btn-primary">Edit Category</button>
                     </form>
                   </div>     

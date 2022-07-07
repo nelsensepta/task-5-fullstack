@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ArticleController extends Controller
@@ -113,8 +114,12 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Article $article)
     {
-        //
+        // if ($article->image) {
+        //     Storage::delete($article->image);
+        // }
+        Article::destroy($article->id);
+        return redirect('home/articles')->with('success', 'Article has been deleted');
     }
 }

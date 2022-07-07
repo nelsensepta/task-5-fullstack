@@ -15,7 +15,7 @@
                  </div>
                 <div class="card-body">
                   @if (session()->has('success'))
-                    <div class="alert alert-success  col-lg-8">{{session('success')}}</div>
+                    <div class="alert alert-success  col-lg-12">{{session('success')}}</div>
                   @endif
                   <div class="table-responsive">
                     <a href="/home/categories/create" class="btn btn-primary mb-3">Create New Category</a>
@@ -37,7 +37,7 @@
                           <td>
                             <a href="/home/categories/{{$category->id}}"  class="badge bg-info mb-1" ><i class="bi bi-eye-fill"></i></a>
                             <a href="/home/categories/{{$category->id}}/edit"  class="badge bg-warning mb-1" ><i class="bi bi-pencil"></i></a>
-                            <form action="/dashboard/categories/{{$category->id}}" method="POST" class="d-inline">
+                            <form action="/home/categories/{{$category->id}}" method="POST" class="d-inline">
                               @method('delete')
                               @csrf
                               <button class="badge bg-danger border-0" onclick="return confirm('Are You Sure ?')">
