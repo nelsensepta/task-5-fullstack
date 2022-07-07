@@ -40,7 +40,6 @@ class CategoryController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "name" => "required|max:100",
-
         ]);
 
         //check if validation fails
@@ -55,9 +54,8 @@ class CategoryController extends Controller
         //create post
         $category = Category::create([
             'name' => $request->name,
-            "user_id" => 1,
+            "user_id" => auth()->user()->id,
         ]);
-
         //return response
         return new CategoryResource(true, 'Category Berhasil Ditambahkan!', $category);
     }
@@ -90,7 +88,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //define validation rules
+        // //define validation rules
         $validator = Validator::make($request->all(), [
             "name" => "required|max:100",
         ]);
@@ -99,6 +97,12 @@ class CategoryController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+
+        // dd($category);
+
+        $category->update([
+            "name" => $request->name,
+        ]);
 
         // //check if image is not empty
         // if ($request->hasFile('image')) {
@@ -125,10 +129,6 @@ class CategoryController extends Controller
         //         'content' => $request->content,
         //     ]);
         // }
-
-        $category->update([
-            'name' => $request->name,
-        ]);
 
         //return response
         return new CategoryResource(true, 'Data Category Berhasil Diubah!', $category);

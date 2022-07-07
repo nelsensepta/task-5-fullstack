@@ -27,7 +27,7 @@ use Modules\V1\Http\Controllers\CategoryController;
 // Login
 Route::group(["prefix" => "v1"], function () {
     Route::post("/login", "AuthController@login");
-    Route::apiResource('/categories', CategoryController::class);
+    Route::apiResource('/categories', CategoryController::class)->middleware("auth:api");
     // Route::post("/test", "AuthController@login");
     // Route::get('/', function () {
     //     return response([
