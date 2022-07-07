@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\V1\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +27,9 @@ use Illuminate\Support\Facades\Route;
 // Login
 Route::group(["prefix" => "v1"], function () {
     Route::post("/login", "AuthController@login");
-    Route::post("/test", "AuthController@login");
-    // Route::post('/test', function () {
+    Route::apiResource('/categories', CategoryController::class);
+    // Route::post("/test", "AuthController@login");
+    // Route::get('/', function () {
     //     return response([
     //         "status" => false,
     //         "message" => "Benar",

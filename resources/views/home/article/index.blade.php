@@ -14,14 +14,11 @@
                   </div> 
                  </div>
                 <div class="card-body">
-
-                   
-                  
                   @if (session()->has('success'))
                     <div class="alert alert-success  col-lg-12">{{session('success')}}</div>
                   @endif
                   <div class="table-responsive">
-                    <a href="/home/articles/create" class="btn btn-primary mb-3">Create New Post</a>
+                    <a href="/home/articles/create" class="btn btn-primary mb-3">Create New Article</a>
                     <table class="table table-striped table-sm">
                       <thead>
                         <tr>
