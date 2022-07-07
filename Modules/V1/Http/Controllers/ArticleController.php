@@ -2,9 +2,13 @@
 
 namespace Modules\V1\Http\Controllers;
 
+use App\Models\Article;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Modules\V1\Transformers\ResponseResource;
 
 class ArticleController extends Controller
 {
@@ -14,7 +18,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return view('v1::index');
+        $articles = Article::latest()->paginate(5);
+        return new ResponseResource(true, "List Data Article", $articles);
     }
 
     /**
@@ -33,7 +38,28 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            "title" => "required|max:100",
+            "content" => "required",
+            "category_id" => "required",
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        //check if validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        //upload image
+        $image = $request->file('image');
+        $image->storeAs('public/article', $image->hashName());
+        //create post
+        $category = Article::create([
+            'title' => $request->title,
+            "content" => $request->content,
+            "user_id" => auth()->user()->id,
+        ]);
+        //return response
+        return new ResponseResource(true, 'Category Berhasil Ditambahkan!', $category);
     }
 
     /**
@@ -43,7 +69,15 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        return view('v1::show');
+        $article = Article::find($id);
+        if (is_null($article)) {
+            $response = [
+                'success' => false,
+                'message' => "Article tidak di temukan",
+            ];
+            return response()->json($response);
+        }
+        return new ResponseResource(true, 'Data Article Ditemukan!', $article);
     }
 
     /**
@@ -64,7 +98,52 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $article = Article::find($id);
+        if (is_null($article)) {
+            $response = [
+                'success' => false,
+                'message' => "Article tidak di temukan",
+            ];
+            return response()->json($response);
+        }
+        //define validation rules
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'content' => 'required',
+        ]);
+
+        //check if validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        //check if image is not empty
+        if ($request->hasFile('image')) {
+            //upload image
+            $image = $request->file('image');
+            $image->storeAs('public/article', $image->hashName());
+
+            //delete old image
+            Storage::delete('public/posts/' . $article->image);
+
+            //update ar$article with new image
+            $article->update([
+                'image' => $image->hashName(),
+                'title' => $request->title,
+                'content' => $request->content,
+            ]);
+
+        } else {
+            //update post without image
+            $article->update([
+                'title' => $request->title,
+                'content' => $request->content,
+            ]);
+        }
+
+        //return response
+        return new ResponseResource(true, 'Data Post Berhasil Diubah!', $article);
     }
 
     /**
@@ -74,6 +153,23 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $article = Article::find($id);
+        if (is_null($article)) {
+            $response = [
+                'success' => false,
+                'message' => "Article tidak di temukan",
+            ];
+            return response()->json($response);
+        }
+
+        //delete image
+        Storage::delete('public/article/' . $article->image);
+
+        //delete arti$article
+        $article->delete();
+
+        //return response
+        return new ResponseResource(true, 'Data Post Berhasil Dihapus!', null);
+
     }
 }

@@ -2,12 +2,13 @@
 
 namespace Modules\V1\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
+// use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
-use Modules\V1\Transformers\CategoryResource;
+use Modules\V1\Transformers\ResponseResource;
 
 class CategoryController extends Controller
 {
@@ -15,11 +16,15 @@ class CategoryController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
+
+    // public function __construct($name, $color)
+    // {
+    //     $this->
+    // }
     public function index()
     {
         $categories = Category::latest()->paginate(5);
-        // return response(["status" => 200, "message" => "Hello World"]);
-        return new CategoryResource(true, "List Data Category", $categories);
+        return new ResponseResource(true, "List Data Category", $categories);
     }
 
     /**
@@ -57,7 +62,7 @@ class CategoryController extends Controller
             "user_id" => auth()->user()->id,
         ]);
         //return response
-        return new CategoryResource(true, 'Category Berhasil Ditambahkan!', $category);
+        return new ResponseResource(true, 'Category Berhasil Ditambahkan!', $category);
     }
 
     /**
@@ -65,9 +70,20 @@ class CategoryController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        return new CategoryResource(true, 'Data Category Ditemukan!', $category);
+
+        $category = Category::find($id);
+
+        if (is_null($category)) {
+            $response = [
+                'success' => false,
+                'message' => "Category tidak di temukan",
+            ];
+            return response()->json($response);
+        }
+        return new ResponseResource(true, 'Data Category Ditemukan!', $category);
+
     }
 
     /**
@@ -86,9 +102,10 @@ class CategoryController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
         // //define validation rules
+        $category = Category::find($id);
         $validator = Validator::make($request->all(), [
             "name" => "required|max:100",
         ]);
@@ -98,40 +115,21 @@ class CategoryController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        // dd($category);
+        if (is_null($category)) {
+            $response = [
+                'success' => false,
+                'message' => "Category tidak di temukan",
+            ];
+            return response()->json($response);
+        }
 
-        $category->update([
-            "name" => $request->name,
-        ]);
+        $category->update(
+            [
+                "name" => $request->name,
+            ]
+        );
 
-        // //check if image is not empty
-        // if ($request->hasFile('image')) {
-
-        //     //upload image
-        //     $image = $request->file('image');
-        //     $image->storeAs('public/categories', $image->hashName());
-
-        //     //delete old image
-        //     Storage::delete('public/categorys/' . $category->image);
-
-        //     //update category with new image
-        //     $category->update([
-        //         'image' => $image->hashName(),
-        //         'title' => $request->title,
-        //         'content' => $request->content,
-        //     ]);
-
-        // } else {
-
-        //     //update post without image
-        //     $post->update([
-        //         'title' => $request->title,
-        //         'content' => $request->content,
-        //     ]);
-        // }
-
-        //return response
-        return new CategoryResource(true, 'Data Category Berhasil Diubah!', $category);
+        return new ResponseResource(true, 'Data Category Berhasil Diubah!', $category);
     }
 
     /**
@@ -139,8 +137,17 @@ class CategoryController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
+
+        $category = Category::find($id);
+        if (is_null($category)) {
+            $response = [
+                'success' => false,
+                'message' => "Category tidak di temukan",
+            ];
+            return response()->json($response);
+        }
         //delete image
         // Storage::delete('public/posts/' . $post->image);
 
@@ -148,6 +155,6 @@ class CategoryController extends Controller
         $category->delete();
 
         //return response
-        return new CategoryResource(true, 'Category Berhasil Dihapus!', null);
+        return new ResponseResource(true, 'Category Berhasil Dihapus!', null);
     }
 }

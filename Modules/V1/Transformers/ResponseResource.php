@@ -4,7 +4,7 @@ namespace Modules\V1\Transformers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class ResponseResource extends JsonResource
 {
     public $status;
     public $message;
@@ -23,6 +23,7 @@ class CategoryResource extends JsonResource
      */
     public function toArray($request)
     {
+
         return [
             'success' => $this->status,
             'message' => $this->message,
