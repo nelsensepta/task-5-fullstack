@@ -57,6 +57,7 @@ class ArticleController extends Controller
             'title' => $request->title,
             "content" => $request->content,
             "category_id" => $request->category_id,
+            "image" => url("storage/article/" . $image->hashName()),
             "user_id" => auth()->user()->id,
         ]);
         //return response

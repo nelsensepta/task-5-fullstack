@@ -54,9 +54,9 @@ class ArticleController extends Controller
             "image" => "required|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
         ]);
 
-        if ($request->file('image')) {
-            $validatedData['image'] = $request->file('image')->store('post-images');
-        }
+        // if ($request->file('image')) {
+        //     $validatedData['image'] = $request->file('image')->store('post-images');
+        // }
         $image = $request->file('image');
         $image->storeAs('public/article', $image->hashName());
 
@@ -122,13 +122,20 @@ class ArticleController extends Controller
             "image" => "image|mimes:jpeg,png,jpg,gif,svg|max:2048",
         ]);
 
+        // if ($request->file('image')) {
+        //     if ($request->oldImage) {
+        //         Storage::delete($last);
+        //     }
+        //     $validatedData['image'] = $request->file('image')->store('post-images');
+        // }
+
         if ($request->hasFile('image')) {
             //upload image
             $image = $request->file('image');
-            $image->storeAs('storage/article', $image->hashName());
+            $image->storeAs('public/article', $image->hashName());
 
             //delete old image
-            Storage::delete('storage/article/' . $last);
+            Storage::delete("public/article/" . $last);
 
             //update ar$article with new image
             $validatedData['user_id'] = auth()->user()->id;
@@ -153,9 +160,10 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        // if ($article->image) {
-        //     Storage::delete($article->image);
-        // }
+        $last = preg_replace('~.*/~', '', $article->image);
+        if ($article->image) {
+            Storage::delete("public/article/" . $last);
+        }
         Article::destroy($article->id);
         return redirect('home/articles')->with('success', 'Article has been deleted');
     }
