@@ -32,10 +32,10 @@
                             @else
                                <img src="https://source.unsplash.com/1200x500/?{{$article->category->name}}" class="img-fluid" alt="{{$article->category->name}}"/>
                             @endif
-{{--                   
+                
                             <article class="my-3 fs-4">
                                 {!! $article->content !!} 
-                            </article> --}}
+                            </article>
                             {{-- isi body bisa berisi tag html --}}
                         </div>
                     </div>

@@ -21,7 +21,7 @@
                         <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" required autofocus value="{{old('title')}}">
                         @error('title')
                           <div class="invalid-feedback">
-                            {{$message}}
+                            {{ $message }}
                           </div>
                         @enderror
                         {{-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
@@ -40,15 +40,15 @@
                         </select>
                       </div>
                       <div class="mb-3">
-                        <label for="image" class="form-label">Post Image</label>
+                        <label for="image" class="form-label">Poster Image</label>
                         <img class="img-fluid img-preview mb-3 col-sm-8" alt="">
                         <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" onchange="previewImage()">
+                        @error('image')
+                          <div class="invalid-feedback">
+                            {{ $message }}
+                          </div>
+                        @enderror
                       </div>
-                      @error('image')
-                        <div class="invalid-feedback">
-                          {{$message}}
-                        </div>
-                      @enderror
                       <div class="mb-3">
                         <label for="content" class="form-label">Content</label>
                         {{-- <x-forms.tinymce-editor/> --}}
@@ -61,7 +61,6 @@
                       <button type="submit" class="btn btn-primary">Create Article</button>
                     </form>
                   </div>    
-                  
                 </div>
             </div>
         </div>

@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body">
                   <div class="col-lg-12">
-                    <form method="POST" action="/home/article/{{$article->id}}" class="mb-5" enctype="multipart/form-data">
+                    <form method="POST" action="/home/articles/{{$article->id}}" class="mb-5" enctype="multipart/form-data">
                       @method('put')
                       @csrf
                       <div class="mb-3">
@@ -41,13 +41,16 @@
                   
                       <div class="mb-3">
                         <label for="image" class="form-label">Article Image</label>
+                        <img src={{ $article->image }} class="img-fluid img-preview mb-3 col-sm-8 d-block" alt="{{$article->category->name}}">
                         <input type="hidden" name="oldImage" value="{{ $article->image }}">
                         @if ($article->image)
-                          <img src={{ $article->image }} class="img-fluid img-preview mb-3 col-sm-8 d-block" alt="">
-                        @else
-                          <img class="img-fluid img-preview mb-3 col-sm-8" alt="">
                         @endif
                         <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" onchange="previewImage()">
+                        @error('image')
+                        <div class="invalid-feedback">
+                          {{ $message }}
+                        </div>
+                      @enderror
                       </div>   
                       <div class="mb-3">
                          <label for="body" class="form-label">Body</label>

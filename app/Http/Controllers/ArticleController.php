@@ -48,10 +48,10 @@ class ArticleController extends Controller
 
         // dd($request);
         $validatedData = $request->validate([
-            "title" => "required|max:100",
+            "title" => "required|max:10",
             "content" => "required",
             "category_id" => "required",
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            "image" => "required|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
         ]);
 
         if ($request->file('image')) {
@@ -59,15 +59,19 @@ class ArticleController extends Controller
         }
         $image = $request->file('image');
         $image->storeAs('public/article', $image->hashName());
-        $article = [
-            'title' => $request->title,
-            "content" => $request->content,
-            "category_id" => $request->category_id,
-            "image" => url("storage/article/" . $image->hashName()),
-            "user_id" => auth()->user()->id,
-        ];
 
-        Article::create($article);
+        $validatedData['user_id'] = auth()->user()->id;
+        $validatedData['image'] = url("storage/article/" . $image->hashName());
+        // $article = [
+
+        //     'title' => $request->title,
+        //     "content" => $request->content,
+        //     "category_id" => $request->category_id,
+        //     "image" => url("storage/article/" . $image->hashName()),
+        //     "user_id" => auth()->user()->id,
+        // ];
+
+        Article::create($validatedData);
         return redirect('home/articles')->with('success', 'New Articles has been added!');
     }
 
@@ -107,9 +111,38 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Article $article)
     {
-        //
+        $last = preg_replace('~.*/~', '', $article->image);
+
+        $validatedData = $request->validate([
+            "title" => "required|max:10",
+            "content" => "required",
+            "category_id" => "required",
+            "image" => "image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+        ]);
+
+        if ($request->hasFile('image')) {
+            //upload image
+            $image = $request->file('image');
+            $image->storeAs('storage/article', $image->hashName());
+
+            //delete old image
+            Storage::delete('storage/article/' . $last);
+
+            //update ar$article with new image
+            $validatedData['user_id'] = auth()->user()->id;
+            $validatedData['image'] = url("storage/article/" . $image->hashName());
+            $article->update($validatedData);
+
+        } else {
+            //update post without image
+            $article->update(
+                $validatedData,
+            );
+
+        }
+        return redirect('home/articles')->with('success', 'Article has been updated!');
     }
 
     /**
