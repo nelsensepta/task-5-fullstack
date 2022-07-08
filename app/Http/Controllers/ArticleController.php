@@ -46,7 +46,6 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
 
-        // dd($request);
         $validatedData = $request->validate([
             "title" => "required|max:100",
             "content" => "required",
@@ -54,22 +53,11 @@ class ArticleController extends Controller
             "image" => "required|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
         ]);
 
-        // if ($request->file('image')) {
-        //     $validatedData['image'] = $request->file('image')->store('post-images');
-        // }
         $image = $request->file('image');
         $image->storeAs('public/article', $image->hashName());
 
         $validatedData['user_id'] = auth()->user()->id;
         $validatedData['image'] = url("storage/article/" . $image->hashName());
-        // $article = [
-
-        //     'title' => $request->title,
-        //     "content" => $request->content,
-        //     "category_id" => $request->category_id,
-        //     "image" => url("storage/article/" . $image->hashName()),
-        //     "user_id" => auth()->user()->id,
-        // ];
 
         Article::create($validatedData);
         return redirect('home/articles')->with('success', 'New Articles has been added!');
@@ -121,13 +109,7 @@ class ArticleController extends Controller
             "category_id" => "required",
             "image" => "image|mimes:jpeg,png,jpg,gif,svg|max:2048",
         ]);
-
-        // if ($request->file('image')) {
-        //     if ($request->oldImage) {
-        //         Storage::delete($last);
-        //     }
-        //     $validatedData['image'] = $request->file('image')->store('post-images');
-        // }
+        // $validatedData['user_id'] = auth()->user()->id;
 
         if ($request->hasFile('image')) {
             //upload image
@@ -138,7 +120,6 @@ class ArticleController extends Controller
             Storage::delete("public/article/" . $last);
 
             //update ar$article with new image
-            $validatedData['user_id'] = auth()->user()->id;
             $validatedData['image'] = url("storage/article/" . $image->hashName());
             $article->update($validatedData);
 
