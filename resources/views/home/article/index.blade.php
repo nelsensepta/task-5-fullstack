@@ -19,7 +19,7 @@
                   @endif
                   <div class="table-responsive">
                     <a href="/home/articles/create" class="btn btn-primary mb-3">Create New Article</a>
-                    <table class="table table-striped table-sm">
+                    <table class="table table-striped align-middle">
                       <thead>
                         <tr>
                           <th scope="col">#</th>
@@ -39,14 +39,14 @@
                           <td>Belum ada kategori</td>
                          @endif
                           <td>
-                            <a href="/home/articles/{{$article->id}}"  class="badge bg-info mb-1" ><i class="bi bi-eye-fill"></i></a>
-                            <a href="/home/articles/{{$article->id}}/edit"  class="badge bg-warning mb-1" ><i class="bi bi-pencil"></i></a>
+                            <a href="/home/articles/{{$article->id}}"  class="badge bg-info mb-1" ><i class="bi bi-eye-fill" style="font-size: 20px;"></i></a>
+                            <a href="/home/articles/{{$article->id}}/edit"  class="badge bg-warning mb-1" ><i class="bi bi-pencil" style="font-size: 20px;"></i></a>
                   
                             <form action="/home/articles/{{$article->id}}" method="POST" class="d-inline">
                               @method('delete')
                               @csrf
                               <button class="badge bg-danger border-0" onclick="return confirm('Are You Sure ?')">
-                                <i class="bi bi-trash"></i>
+                                <i class="bi bi-trash" style="font-size: 20px;"></i>
                               </button>
                             </form>
                             {{-- <a href="/dashboard/posts/{{$post->slug}}"  class="badge bg-danger" ><span data-feather="x-circle"></span></a> --}}

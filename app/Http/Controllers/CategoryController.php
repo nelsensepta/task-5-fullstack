@@ -42,7 +42,7 @@ class CategoryController extends Controller
     {
 
         $validatedData = $request->validate([
-            'name' => 'required|max:255',
+            'name' => 'required|max:100|unique:categories',
         ]);
         $validatedData['user_id'] = auth()->user()->id;
         Category::create($validatedData);
@@ -55,9 +55,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Category $category)
     {
-        //
+
+        return view("home.category.show", [
+            "category" => $category,
+        ]);
     }
 
     /**
@@ -84,7 +87,7 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $rules = [
-            'name' => 'required|max:100',
+            'name' => 'required|max:100|unique:categories',
         ];
         $validatedData = $request->validate($rules);
         $validatedData['user_id'] = auth()->user()->id;

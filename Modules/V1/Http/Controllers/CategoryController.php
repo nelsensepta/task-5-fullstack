@@ -4,9 +4,9 @@ namespace Modules\V1\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-// use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Modules\V1\Transformers\ResponseResource;
 
@@ -44,17 +44,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "name" => "required|max:100",
+            "name" => "required|max:100|unique:categories",
         ]);
 
         //check if validation fails
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
-        //upload image
-        // $image = $request->file('image');
-        // $image->storeAs('public/posts', $image->hashName());
 
         //create post
         $category = Category::create([
@@ -72,9 +68,7 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-
         $category = Category::find($id);
-
         if (is_null($category)) {
             $response = [
                 'success' => false,
@@ -107,7 +101,7 @@ class CategoryController extends Controller
         // //define validation rules
         $category = Category::find($id);
         $validator = Validator::make($request->all(), [
-            "name" => "required|max:100",
+            "name" => "required|max:100|unique:categories",
         ]);
 
         //check if validation fails
@@ -148,8 +142,6 @@ class CategoryController extends Controller
             ];
             return response()->json($response);
         }
-        //delete image
-        // Storage::delete('public/posts/' . $post->image);
 
         //delete post
         $category->delete();

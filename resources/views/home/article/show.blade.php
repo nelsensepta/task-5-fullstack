@@ -23,11 +23,11 @@
                           </form>
                           {{-- <a href="/posts" class="btn btn-danger"><span data-feather="x-circle"></span> Delete</a> --}}
                             <h2 class="my-3">{{ $article->title }}</h2>
-                            <p>By.  <a href="/home/article?user={{$article->user->name}}" class="text-decoration-none">{{ $article->user->name }}</a> in <a href="/home/articles?category={{$article->category->id}}">{{ $article->category->name }}</a></p>
+                            <p>By.  <a href="/home/article?user={{$article->user->name}}" class="text-decoration-none">{{ $article->user->name }}</a> in <a href="/home/articles?category=@if($article->category) {{$article->category->id}} @endif">@if($article->category) {{$article->category->name}} @endif</a></p>
                             @if($article->image)
                             <div style="max-height: 350px, overflow:hidden">
-                              <img src={{$article->image}} class="img-fluid" alt="{{$article->category->name}}"/>
-                              {{-- <img src={{$article->image}} class="img-fluid" alt="{{$article->category->name}}"/> --}}
+                              <img src={{$article->image}} class="img-fluid" alt="@if($article->category) {{$article->category->name}} @endif"/>
+                        
                             </div>
                             @else
                                <img src="https://source.unsplash.com/1200x500/?{{$article->category->name}}" class="img-fluid" alt="{{$article->category->name}}"/>

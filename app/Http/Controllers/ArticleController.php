@@ -48,7 +48,7 @@ class ArticleController extends Controller
 
         // dd($request);
         $validatedData = $request->validate([
-            "title" => "required|max:10",
+            "title" => "required|max:100",
             "content" => "required",
             "category_id" => "required",
             "image" => "required|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
@@ -116,7 +116,7 @@ class ArticleController extends Controller
         $last = preg_replace('~.*/~', '', $article->image);
 
         $validatedData = $request->validate([
-            "title" => "required|max:10",
+            "title" => "required|max:100",
             "content" => "required",
             "category_id" => "required",
             "image" => "image|mimes:jpeg,png,jpg,gif,svg|max:2048",

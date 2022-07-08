@@ -52,10 +52,10 @@
                       <div class="mb-3">
                         <label for="content" class="form-label">Content</label>
                         {{-- <x-forms.tinymce-editor/> --}}
-                        <textarea id="content" type="text" name="content" class="form-control">{{old("body")}}</textarea>
+                        <textarea id="content" type="text" name="content" class="form-control">{{old("content")}}</textarea>
                         {{-- <trix-editor input="body"></trix-editor> --}}
-                        @error('contents')   
-                          <p class="text-danger">{{$message}}</p>
+                        @error('content')   
+                          <p class="text-danger mt-3">{{$message}}</p>
                         @enderror
                       </div>
                       <button type="submit" class="btn btn-primary">Create Article</button>

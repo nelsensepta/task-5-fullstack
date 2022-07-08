@@ -41,7 +41,7 @@
                   
                       <div class="mb-3">
                         <label for="image" class="form-label">Article Image</label>
-                        <img src={{ $article->image }} class="img-fluid img-preview mb-3 col-sm-8 d-block" alt="{{$article->category->name}}">
+                        <img src={{ $article->image }} class="img-fluid img-preview mb-3 col-sm-8 d-block" alt="@if($article->category) {{$article->category->name}} @endif">
                         <input type="hidden" name="oldImage" value="{{ $article->image }}">
                         @if ($article->image)
                         @endif
@@ -53,19 +53,13 @@
                       @enderror
                       </div>   
                       <div class="mb-3">
-                         <label for="body" class="form-label">Body</label>
-                          @error('body')   
-                            <p class="text-danger">{{$message}}</p>
-                          @enderror
-                          <div class="mb-3">
                             <label for="content" class="form-label">Content</label>
                             {{-- <x-forms.tinymce-editor/> --}}
                             <textarea id="content" type="text" name="content" class="form-control">{{old('content', $article->content)}}</textarea>
                             {{-- <trix-editor input="body"></trix-editor> --}}
-                            @error('contents')   
-                              <p class="text-danger">{{$message}}</p>
-                            @enderror
-                          </div>
+                            @error('content')   
+                              <p class="text-danger mt-3">{{$message}}</p>
+                            @enderror      
                       </div>
                       <button type="submit" class="btn btn-primary">Edit Article</button>
                     </form>
@@ -78,6 +72,8 @@
     </div>
 </div>
 <script>
+
+
   tinymce.init({
             height: 600,
             selector: 'textarea', // Replace this CSS selector to match the placeholder element for TinyMCE
@@ -86,6 +82,8 @@
             
           });
 
+          
+      
 
   // img Preview
   function previewImage (){

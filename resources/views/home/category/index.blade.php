@@ -15,11 +15,11 @@
                  </div>
                 <div class="card-body">
                   @if (session()->has('success'))
-                    <div class="alert alert-success  col-lg-12">{{session('success')}}</div>
+                    <div class="alert alert-success col-lg-12">{{session('success')}}</div>
                   @endif
                   <div class="table-responsive">
                     <a href="/home/categories/create" class="btn btn-primary mb-3">Create New Category</a>
-                    <table class="table table-striped table-sm">
+                    <table class="table table-striped align-middle">
                       <thead>
                         <tr>
                           <th scope="col">#</th>
@@ -35,13 +35,13 @@
                           <td>{{ $category->name }}</td>
                           {{-- <td>{{ $article->category->name }}</td> --}}
                           <td>
-                            <a href="/home/categories/{{$category->id}}"  class="badge bg-info mb-1" ><i class="bi bi-eye-fill"></i></a>
-                            <a href="/home/categories/{{$category->id}}/edit"  class="badge bg-warning mb-1" ><i class="bi bi-pencil"></i></a>
+                            <a href="/home/categories/{{$category->id}}"  class="badge bg-info mb-1" ><i class="bi bi-eye-fill" style="font-size: 20px;"></i></a>
+                            <a href="/home/categories/{{$category->id}}/edit"  class="badge bg-warning mb-1" ><i class="bi bi-pencil" style="font-size: 20px;"></i></a>
                             <form action="/home/categories/{{$category->id}}" method="POST" class="d-inline">
                               @method('delete')
                               @csrf
                               <button class="badge bg-danger border-0" onclick="return confirm('Are You Sure ?')">
-                                <i class="bi bi-trash"></i>
+                                <i class="bi bi-trash" style="font-size: 20px;"></i>
                               </button>
                             </form>
                             {{-- <a href="/dashboard/posts/{{$post->slug}}"  class="badge bg-danger" ><span data-feather="x-circle"></span></a> --}}
