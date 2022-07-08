@@ -25,15 +25,7 @@
                         @enderror
                        
                       </div>
-                      {{-- <div class="mb-3">
-                        <label for="slug" class="form-label">Slug</label>
-                        <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug"  name="slug"  required value="{{old('slug', $post->slug)}}">
-                        @error('slug')
-                        <div class="invalid-feedback">
-                          {{$message}}
-                        </div>
-                      @enderror
-                      </div> --}}
+                     
                       <div class="mb-3">
                         <label for="category" class="form-label">Category</label>
                         <select class="form-select" name="category_id">
@@ -62,8 +54,15 @@
                           @error('body')   
                             <p class="text-danger">{{$message}}</p>
                           @enderror
-                          {{-- <input id="body" type="hidden" name="body" value="{{old('body', $post->body )}}"> --}}
-                          {{-- <trix-editor input="body"></trix-editor> --}}
+                          <div class="mb-3">
+                            <label for="content" class="form-label">Content</label>
+                            {{-- <x-forms.tinymce-editor/> --}}
+                            <textarea id="content" type="text" name="content" class="form-control">{{old('content', $article->content)}}</textarea>
+                            {{-- <trix-editor input="body"></trix-editor> --}}
+                            @error('contents')   
+                              <p class="text-danger">{{$message}}</p>
+                            @enderror
+                          </div>
                       </div>
                       <button type="submit" class="btn btn-primary">Edit Article</button>
                     </form>
@@ -76,17 +75,14 @@
     </div>
 </div>
 <script>
-  const title = document.getElementById("title");
-  const slug = document.getElementById("slug");
-  title.addEventListener("change", () => {
-    fetch("/dashboard/posts/checkSlug?title=" + title.value)
-    .then(response => response.json())
-    .then(data => slug.value = data.slug)
-  });
+  tinymce.init({
+            height: 600,
+            selector: 'textarea', // Replace this CSS selector to match the placeholder element for TinyMCE
+            plugins: "advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount emoticons",
+            toolbar:"undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
+            
+          });
 
-  document.addEventListener("trix-file-accept", (e) =>{
-    e.preventDefault();
-  })
 
   // img Preview
   function previewImage (){

@@ -26,7 +26,7 @@
                             <p>By.  <a href="/home/article?user={{$article->user->name}}" class="text-decoration-none">{{ $article->user->name }}</a> in <a href="/home/articles?category={{$article->category->id}}">{{ $article->category->name }}</a></p>
                             @if($article->image)
                             <div style="max-height: 350px, overflow:hidden">
-                              {{-- <img src="{{asset('storage/' . $post->image)}}" class="img-fluid" alt="{{$post->category->name}}"/> --}}
+                              <img src={{$article->image}} class="img-fluid" alt="{{$article->category->name}}"/>
                               {{-- <img src={{$article->image}} class="img-fluid" alt="{{$article->category->name}}"/> --}}
                             </div>
                             @else

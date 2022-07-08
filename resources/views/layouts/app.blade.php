@@ -19,7 +19,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="{{asset("js/tinymce//tinymce.min.js")}}"></script>
+    <script src="{{asset("js/tinymce/tinymce.min.js")}}"></script>
+    {{-- <script src="{{asset("js/tinymce/plugins/paste/plugin.min.js")}}"></script>
+    <script src="{{asset("js/tinymce/plugins/print/plugin.min.js")}}"></script>
+    <script src="{{asset("js/tinymce/plugins/image/plugin.min.js")}}"></script> --}}
        
     {{-- @section("script") --}}
 </head>

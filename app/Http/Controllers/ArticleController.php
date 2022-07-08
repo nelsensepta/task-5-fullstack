@@ -6,7 +6,6 @@ use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
@@ -47,23 +46,29 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
 
+        // dd($request);
         $validatedData = $request->validate([
-            'title' => 'required|max:255',
-            'slug' => 'required|unique:posts',
-            'category_id' => 'required',
-            'image' => 'image|file|max:3072',
-            'body' => 'required',
+            "title" => "required|max:100",
+            "content" => "required",
+            "category_id" => "required",
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($request->file('image')) {
             $validatedData['image'] = $request->file('image')->store('post-images');
         }
+        $image = $request->file('image');
+        $image->storeAs('public/article', $image->hashName());
+        $article = [
+            'title' => $request->title,
+            "content" => $request->content,
+            "category_id" => $request->category_id,
+            "image" => url("storage/article/" . $image->hashName()),
+            "user_id" => auth()->user()->id,
+        ];
 
-        $validatedData['user_id'] = auth()->user()->id;
-        $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200);
-
-        Article::create($validatedData);
-        return redirect('dashboard/posts')->with('success', 'New Post has been added!');
+        Article::create($article);
+        return redirect('home/articles')->with('success', 'New Articles has been added!');
     }
 
     /**

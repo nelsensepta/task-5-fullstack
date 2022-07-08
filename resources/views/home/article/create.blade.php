@@ -50,11 +50,11 @@
                         </div>
                       @enderror
                       <div class="mb-3">
-                        <label for="body" class="form-label">Body</label>
+                        <label for="content" class="form-label">Content</label>
                         {{-- <x-forms.tinymce-editor/> --}}
-                        <textarea id="ok" type="text" name="content" required class="form-control">{{ old('content') }}</textarea>
+                        <textarea id="content" type="text" name="content" class="form-control">{{old("body")}}</textarea>
                         {{-- <trix-editor input="body"></trix-editor> --}}
-                        @error('content')   
+                        @error('contents')   
                           <p class="text-danger">{{$message}}</p>
                         @enderror
                       </div>
@@ -71,24 +71,12 @@
 <script>
           tinymce.init({
             height: 600,
-            selector: 'textarea#ok', // Replace this CSS selector to match the placeholder element for TinyMCE
-            plugins: "advlist autolink lists link image editimage charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount emoticons",
+            selector: 'textarea', // Replace this CSS selector to match the placeholder element for TinyMCE
+            plugins: "advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount emoticons",
             toolbar:"undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
+            
           });
 
-          
- 
-                    const title = document.getElementById("title");
-                    const slug = document.getElementById("slug");
-                    title.addEventListener("change", () => {
-                      fetch("/dashboard/posts/checkSlug?title=" + title.value)
-                      .then(response => response.json())
-                      .then(data => slug.value = data.slug)
-                    });
-                  
-                    document.addEventListener("trix-file-accept", (e) =>{
-                      e.preventDefault();
-                    })
                   
                   
                     function previewImage (){
