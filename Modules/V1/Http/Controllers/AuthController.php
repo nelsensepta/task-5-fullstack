@@ -19,7 +19,7 @@ class AuthController extends Controller
         try {
             $user = User::where("email", $request->email)->first();
             if (!$user) {
-                return response(["status" => 400, "message" => "User Not Found"]);
+                return response(["status" => 400, "message" => "Email / Password Salah"]);
             }
 
             if (Hash::check($request->password, $user->password)) {

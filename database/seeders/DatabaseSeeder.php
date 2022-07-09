@@ -29,12 +29,13 @@ class DatabaseSeeder extends Seeder
         //     "password" => bcrypt("septaAdmin"),
         // ]);
 
-        Category::create([
-            "name" => "Bola",
-            "user_id" => 1,
-        ]);
+        // Category::create([
+        //     "name" => "Bola",
+        //     "user_id" => 1,
+        // ]);
 
-        Article::factory(10)->create();
+        Article::factory(20)->create();
+        Category::factory(10)->create();
 
     }
 }

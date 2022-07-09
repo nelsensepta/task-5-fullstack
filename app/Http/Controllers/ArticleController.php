@@ -33,7 +33,7 @@ class ArticleController extends Controller
     public function create()
     {
         return view("home.article.create", [
-            "categories" => Category::all(),
+            "categories" => Category::where("user_id", auth()->user()->id)->get(),
         ]);
     }
 
@@ -71,8 +71,6 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        // dd($article);
-
         return view("home.article.show", [
             "article" => $article,
         ]);
@@ -88,7 +86,7 @@ class ArticleController extends Controller
     {
         return view("home.article.edit", [
             'article' => $article,
-            "categories" => Category::all(),
+            "categories" => Category::where("user_id", auth()->user()->id)->get(),
         ]);
     }
 

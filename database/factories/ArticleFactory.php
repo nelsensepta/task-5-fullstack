@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,13 +18,11 @@ class ArticleFactory extends Factory
     public function definition()
     {
         return [
-            "title" => $this->faker->sentence(mt_rand(2, 10)),
-            // "category_id" => $this->faker->unique()->numberBetween(1, Category::count()),
-            // "user_id" => $this->faker->unique()->numberBetween(1, User::count()),
-            "category_id" => 1,
+            "title" => $this->faker->unique()->sentence(4),
+            "category_id" => $this->faker->randomDigitNotNull(1, Category::count()),
             "user_id" => 1,
             "content" => $this->faker->paragraph(mt_rand(3, 10)),
-            'image' => $this->faker->imageUrl(200, 200, "animals", true),
+            'image' => $this->faker->imageUrl(200, 200, true),
         ];
     }
 }

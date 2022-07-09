@@ -17,13 +17,10 @@ class CategoryController extends Controller
      * @return Renderable
      */
 
-    // public function __construct($name, $color)
-    // {
-    //     $this->
-    // }
     public function index()
     {
-        $categories = Category::latest()->paginate(5);
+        // $categories = Category::latest()->paginate(5);
+        $categories = Category::where("user_id", auth()->user()->id)->latest()->paginate(1);
         return new ResponseResource(true, "List Data Category", $categories);
     }
 

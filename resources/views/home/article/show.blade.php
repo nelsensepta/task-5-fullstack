@@ -2,6 +2,7 @@
 
 @section('content')
 
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -23,7 +24,7 @@
                           </form>
                           {{-- <a href="/posts" class="btn btn-danger"><span data-feather="x-circle"></span> Delete</a> --}}
                             <h2 class="my-3">{{ $article->title }}</h2>
-                            <p>By.  <a href="/home/article?user={{$article->user->name}}" class="text-decoration-none">{{ $article->user->name }}</a> in <a href="/home/articles?category=@if($article->category) {{$article->category->id}} @endif">@if($article->category) {{$article->category->name}} @endif</a></p>
+                            <p><strong>By.</strong> {{ $article->user->name }} <strong>in</strong> @if($article->category)  {{$article->category->name}} @endif </p>
                             @if($article->image)
                             <div style="max-height: 350px, overflow:hidden">
                               <img src={{$article->image}} class="img-fluid" alt="@if($article->category) {{$article->category->name}} @endif"/>

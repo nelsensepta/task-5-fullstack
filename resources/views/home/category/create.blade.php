@@ -16,29 +16,13 @@
                       @csrf
                       <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required autofocus value="{{old('name')}}">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" autofocus value="{{old('name')}}">
                         @error('name')
                           <div class="invalid-feedback">
                             {{$message}}
                           </div>
                         @enderror
-                        {{-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
                       </div>
-                     
-                      {{-- <div class="mb-3">
-                        <label for="article" class="form-label">Articles</label>
-                        <select class="form-select" name="id">
-                          @foreach ($articles as $article )
-                            @if (old('id') == $article->id)    
-                              <option value="{{ $article->id }}" selected>{{ $article->title }}</option>
-                            @else
-                              <option value="{{ $article->id }}">{{ $article->title }}</option>
-                            @endif
-                          @endforeach
-                        </select>
-                      </div> --}}
-                      
-                    
                       <button type="submit" class="btn btn-primary">Create Category</button>
                     </form>
                   </div>    

@@ -13,12 +13,13 @@
                     <h1 class="h2">My Category</h1>
                   </div> 
                  </div>
-                <div class="card-body">
+                 <div class="card-body">
+                  <a href="/home/categories/create" class="btn btn-primary mb-3">Create New Category</a>
+                  @if ($categories->count())
                   @if (session()->has('success'))
                     <div class="alert alert-success col-lg-12">{{session('success')}}</div>
                   @endif
                   <div class="table-responsive">
-                    <a href="/home/categories/create" class="btn btn-primary mb-3">Create New Category</a>
                     <table class="table table-striped align-middle">
                       <thead>
                         <tr>
@@ -50,7 +51,11 @@
                         @endforeach
                       </tbody>
                     </table>
-                  </div>
+                  </div>       
+                  @else
+                  <p class="text-center fs-4">No Category Found
+                  </p>
+                  @endif
                 </div>
                 
             </div>
