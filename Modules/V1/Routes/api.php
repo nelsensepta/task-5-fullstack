@@ -30,12 +30,5 @@ Route::group(["prefix" => "v1"], function () {
     Route::post("/login", "AuthController@login");
     Route::apiResource('/categories', CategoryController::class)->middleware("auth:api");
     Route::apiResource('/articles', ArticleController::class)->middleware("auth:api");
-    // Route::post("/test", "AuthController@login");
-    // Route::get('/', function () {
-    //     return response([
-    //         "status" => false,
-    //         "message" => "Benar",
-    //     ]);
-    // });
     Route::get("/", "V1Controller@index")->middleware("auth:api");
 });

@@ -19,7 +19,7 @@ class ArticleController extends Controller
     public function index()
     {
         // $articles = Article::latest()->paginate(5);
-        $articles = Article::where("user_id", auth()->user()->id)->latest()->paginate(1);
+        $articles = Article::where("user_id", auth()->user()->id)->latest()->paginate(10);
         return new ResponseResource(true, "List Data Article", $articles);
     }
 

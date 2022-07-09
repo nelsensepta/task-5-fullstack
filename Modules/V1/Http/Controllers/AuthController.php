@@ -28,7 +28,6 @@ class AuthController extends Controller
             } else {
                 return response(["status" => 400, "message" => "Email / Password Salah"]);
             }
-
         } catch (\Exception$e) {
             return response(["message" => $e->getMessage(), "status" => 400]);
         }

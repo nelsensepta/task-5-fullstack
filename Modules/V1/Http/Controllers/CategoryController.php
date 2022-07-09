@@ -20,7 +20,7 @@ class CategoryController extends Controller
     public function index()
     {
         // $categories = Category::latest()->paginate(5);
-        $categories = Category::where("user_id", auth()->user()->id)->latest()->paginate(1);
+        $categories = Category::where("user_id", auth()->user()->id)->latest()->paginate(5);
         return new ResponseResource(true, "List Data Category", $categories);
     }
 
