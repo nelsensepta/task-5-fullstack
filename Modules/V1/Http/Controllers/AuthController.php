@@ -45,7 +45,7 @@ class AuthController extends Controller
 
         if (Hash::check($request->password, $user->password)) {
             $token = $user->createToken($user->name)->accessToken;
-            return response(["status" => 200, "meesage" => "Berhasil Login", "user" => $user, "token" => $token]);
+            return response(["status" => 200, "message" => "Berhasil Login", "user" => $user, "token" => $token]);
         } else {
             return response(["status" => 400, "message" => "Email / Password Salah"]);
         }
